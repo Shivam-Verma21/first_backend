@@ -14,14 +14,16 @@ app.get("/z", (req, res) => {
   res.status(404).send("<h1>Not found!!</h1>");
 });
 
-app.get("/github", (req, res) => {
-  const dataFetching = async () => {
+app.get("/github", async (req, res) => {
+  try {
     const response = await fetch("https://api.github.com/users/Shivam-Verma21");
     const data = await response.json();
-    console.log(data);
-    res.json(data);
-  };
-  dataFetching();
+    console.log(data); // Log the data for debugging (optional)
+    res.json(data); // Send the fetched data as the response
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).send("Error fetching data from GitHub"); // Send an error message with appropriate status code
+  }
 });
 
 // app.listen(port, () => {
